@@ -116,3 +116,5 @@ lib/
 !/file_select/csv_file/Localization.csv
 !/file_select/csv_file/text
 !/file_select/csv_file/dummy.csv
+/__init__.py
+/.gitignore
