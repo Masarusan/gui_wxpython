@@ -99,14 +99,15 @@ lib/
 
 # Application bundle for Mac OS
 *.app/
-
+/file_select/
+/file_select/backup_file/
+/file_select/csv_file/
 !/ハサミのフリーアイコン.png
 !/wxpythongui.py
 !/Localization.csv
 !/Empyrion共有翻訳所Part2 - 最新翻訳PDA7.5 のコピー.csv
 !/__init__.py
 !/.gitignore
-/file_select/
 !/file_select/backup_file/Empyrion共有翻訳所Part2 - 翻訳作業用シート 7.1.csv
 !/file_select/backup_file/ja.po
 !/file_select/backup_file/dummy.cgi
@@ -116,5 +117,5 @@ lib/
 !/file_select/csv_file/Localization.csv
 !/file_select/csv_file/text
 !/file_select/csv_file/dummy.csv
-/__init__.py
-/.gitignore
+
+
