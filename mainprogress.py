@@ -9,8 +9,9 @@ from Merge_resource import merge_resorce
 
 class wxmainbar(progress_gui.MyFrame4, progress_gui.MyFrame2,progress_gui.MyDialog1, merge_resorce):
     def __init__(self, parent, title, system_type):
-        progress_gui.MyFrame4.__init__(self, parent , title)
+        self.frame = progress_gui.MyFrame4.__init__(self, parent , title)
         icon = wx.Icon("ハサミのフリーアイコン.png", wx.BITMAP_TYPE_PNG)
+        self.__ostype = system_type
         if system_type == 0:
             self.SetIcon(icon)
         elif system_type == 1:
@@ -19,18 +20,25 @@ class wxmainbar(progress_gui.MyFrame4, progress_gui.MyFrame2,progress_gui.MyDial
         self.__path = ""
         self.Show()
 
+    def get_ostype(self):
+        return self.__ostype
+
     #判定文を追加する
     def exit(self, event):
         self.Close()
 
     def Okbutton(self, event):
-        mg = merge_resorce()
+        if self.get_path():
+            print("ファイルが選択されている")
+            mg = merge_resorce()
+        else:
+            print("ファイルが選択されていません")
 
     def Cancelbutton(self, event):
         print("MargeCancel")
 
-    def statusBar_vew(self, event):
-        pass
+    def statusBar_view(self, event):
+        self.SetStatusText(self.get_path())
 
     def find_str(self, event):
         pass
@@ -38,15 +46,15 @@ class wxmainbar(progress_gui.MyFrame4, progress_gui.MyFrame2,progress_gui.MyDial
     def window_csv(self, event):
         pass
 
-
     def filechooser(self, event):
         self.__path = self.m_filePicker3.GetPath()
+        self.statusBar_view(event)
         print(self.__path)
         if self.dialog_YES_NO(event):
-            select_file.file_selector(self.__path)
-            merge_resorce(self.__path)
+            select_file.file_selector(self.__path, self.__ostype)
+            merge_resorce(self.__path, self.__ostype)
         else:
-            print("バックアップが選択作成されていません")
+            print("バックアップが作成されていません")
 
     def sf_version(self, event):
         dialog = wx.MessageDialog(self, 'Ver.1.0', 'マージツール', style=wx.OK)

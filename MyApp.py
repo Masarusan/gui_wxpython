@@ -6,14 +6,18 @@ import os
 
 class MyApp(wx.App):
     def __init__(self, redirect=False, filename=None):
-        system_type = self.os_type()
+        self.__systempath_backup = ''
+        self.__systempathcsv = ''
+        self.__system_type = self.os_type()
         wx.App.__init__(self, redirect, filename)
-        self.frame = mainprogress.wxmainbar(None, title="マージツール", system_type=system_type)
+        self.frame = mainprogress.wxmainbar(None, title="マージツール", system_type=self.__system_type)
 
     def os_type(self):
         system_os = platform.system()
         os_ver = 'OS:'
         if system_os == 'Windows':
+            self.__systempath_backup = 'file_select¥¥backup_file¥¥'
+            self.__systempathcsv = 'file_select¥¥csv_file¥¥'
             print(os_ver + system_os)
             return 0
         elif system_os == 'Darwin':
@@ -26,6 +30,8 @@ class MyApp(wx.App):
             print(system_os)
 
 
+
 if __name__ == '__main__':
     app = MyApp()
     app.MainLoop()
+    print("終了しました。")
