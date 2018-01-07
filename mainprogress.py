@@ -5,6 +5,7 @@ import os
 import filecmp
 from file_select import select_file
 from Merge_resource import merge_resorce
+import re
 
 
 class wxmainbar(progress_gui.MyFrame4, progress_gui.MyFrame2,progress_gui.MyDialog1, merge_resorce):
@@ -28,7 +29,7 @@ class wxmainbar(progress_gui.MyFrame4, progress_gui.MyFrame2,progress_gui.MyDial
         self.Close()
 
     def Okbutton(self, event):
-        if self.get_path():
+        if os.path.isfile(self.get_path()):
             print("ファイルが選択されている")
             mg = merge_resorce()
         else:
@@ -49,12 +50,13 @@ class wxmainbar(progress_gui.MyFrame4, progress_gui.MyFrame2,progress_gui.MyDial
     def filechooser(self, event):
         self.__path = self.m_filePicker3.GetPath()
         self.statusBar_view(event)
-        print(self.__path)
+        #print(self.__path)
         if self.dialog_YES_NO(event):
             select_file.file_selector(self.__path, self.__ostype)
             merge_resorce(self.__path, self.__ostype)
         else:
-            print("バックアップが作成されていません")
+            #print("バックアップが作成されていません")
+            pass
 
     def sf_version(self, event):
         dialog = wx.MessageDialog(self, 'Ver.1.0', 'マージツール', style=wx.OK)
@@ -62,16 +64,22 @@ class wxmainbar(progress_gui.MyFrame4, progress_gui.MyFrame2,progress_gui.MyDial
         dialog.Destroy()
 
     def dialog_YES_NO(self, event):
-        dialog = wx.MessageDialog(None, 'バックアップを作成しますか？', 'バクアップ',
-                                  style=wx.YES_NO | wx.ICON_INFORMATION)
-        res = dialog.ShowModal()
-        if res == wx.ID_YES:
-            print("OK")
-            return True
-        elif res == wx.ID_NO:
-            print("NO")
-            return False
-        dialog.Destroy()
+        #pattern = '[a-zA-Z]/[/w//.]*'
+        #repattern = re.compile(pattern)
+        if os.path.isfile(self.get_path()):
+            dialog = wx.MessageDialog(None, 'バックアップを作成しますか？', 'バックアップ',
+                                      style=wx.YES_NO | wx.ICON_INFORMATION)
+            res = dialog.ShowModal()
+            print(self.__path)
+            if res == wx.ID_YES:
+                print("OK")
+                return True
+            elif res == wx.ID_NO:
+                print("NO")
+                return False
+            dialog.Destroy()
+        else:
+            pass
 
     def get_path(self):
         return self.__path
