@@ -1,18 +1,15 @@
 import os
 import filecmp
 import shutil
-from pathlib import Path
 from Merge_resource import merge_resorce
+import system_type
 
 
-class file_selector(merge_resorce):
-    def __init__(self, file, ostype):
-        self.__file = file
-        if ostype == 0:
-            self.__selectfile = "file_select/backup_file/".replace('/', '¥¥')
-        elif ostype == 1:
-            self.__selectfile = "file_select/backup_file"
-        self.backup(self.__file)
+class file_backup(merge_resorce, system_type.os_type):
+    def __init__(self, file_path, ostype):
+        self.__file = file_path
+        self.__change_fileslashed = super().system_pathchange(self.__file, os_type=ostype)
+        self.backup(self.__change_fileslashed)
 
     def is_file(self, firstfile, secondfile):
         if filecmp.cmp(firstfile, secondfile):

@@ -2,10 +2,8 @@ import progress_gui
 import wx
 import wx.adv
 import os
-import filecmp
 from file_select import select_file
 from Merge_resource import merge_resorce
-import re
 
 
 class wxmainbar(progress_gui.MyFrame4, progress_gui.MyFrame2,progress_gui.MyDialog1, merge_resorce):
@@ -27,7 +25,7 @@ class wxmainbar(progress_gui.MyFrame4, progress_gui.MyFrame2,progress_gui.MyDial
     #判定文を追加する
     def exit(self, event):
         self.Close()
-
+    #マージ処理へ移行
     def Okbutton(self, event):
         if os.path.isfile(self.get_path()):
             print("ファイルが選択されている")
@@ -52,8 +50,8 @@ class wxmainbar(progress_gui.MyFrame4, progress_gui.MyFrame2,progress_gui.MyDial
         self.statusBar_view(event)
         #print(self.__path)
         if self.dialog_YES_NO(event):
-            select_file.file_selector(self.__path, self.__ostype)
-            merge_resorce(self.__path, self.__ostype)
+            select_file.file_backup(self.__path)
+            #merge_resorce(self.__path, self.__ostype)
         else:
             #print("バックアップが作成されていません")
             pass
@@ -64,8 +62,6 @@ class wxmainbar(progress_gui.MyFrame4, progress_gui.MyFrame2,progress_gui.MyDial
         dialog.Destroy()
 
     def dialog_YES_NO(self, event):
-        #pattern = '[a-zA-Z]/[/w//.]*'
-        #repattern = re.compile(pattern)
         if os.path.isfile(self.get_path()):
             dialog = wx.MessageDialog(None, 'バックアップを作成しますか？', 'バックアップ',
                                       style=wx.YES_NO | wx.ICON_INFORMATION)
